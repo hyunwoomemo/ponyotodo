@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" color-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>To Do</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <ul class="menuList">
+                <div class="logo">
+                    <img src="img/loading3.svg" alt="">
+                </div>
+                <li><a href="" class="active">할 일</a></li>
+                <li><a href="">가계부</a></li>
+                <li><a href="">일정</a></li>
+                <li><a href="">공부</a></li>
+            </ul>
+        </header>
+        <form id="loginForm">
+            <label for="">What is your name?</label>
+            <input type="text" placeholder="What is your name?" required maxlength="10">
+        </form>
+        <p class="greeting"></p>
+        <div class="container">
+            <div class="toDoAdd">
+                <p>+</p>
+            </div>
+            <div class="contentsWrapper">
+                <ul class="sidemenu"><h3>Side Menu</h3>
+                    <li>menu1</li>
+                    <li>menu2</li>
+                    <li>menu3</li>
+                    <li>menu4</li>
+                </ul>
+                <ul id="toDoList">
+                </ul>
+                <input type="range" min="200" max="600" value="400" id="rangeInput" class="active">
+            </div>
+        </div>
+        <div class="toDoAdd-overlay"></div>
+        <div class="toDoWrapper">
+            <form class="toDoForm">
+                <ul class="wrapper">
+                    <figure class="front" id="closing-date">
+                        <p>마감일</p>
+                        <div class="back"><input type="date"></div>
+                    </figure>
+                    <figure class="front" id="classification">
+                        <p>분류</p>
+                        <span>+</span>
+                        <div class="back">
+                            <input type="radio" name="classification" id="공부">
+                            <input type="radio" name="classification" id="집안일">
+                            <input type="radio" name="classification" id="은비">
+                            <input type="radio" name="classification" id="기타">
+                            <label class="label" for="공부">공부</label>
+                            <label class="label" for="집안일">집안일</label>
+                            <label class="label" for="은비">은비</label>
+                            <label class="label" for="기타">기타</label>
+                        </div>
+                    </figure>
+                    <figure class="front" id="content">
+                        <p>내용</p>
+                        <div class="back">
+                                <input type="text" placeholder="제목을 입력해주세요" id="title">
+                                <input type="text" placeholder="내용을 입력해주세요" id="contents">
+                        </div>
+                        <button>✔️</button>
+                    </figure>
+                </ul>
+            </form>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
