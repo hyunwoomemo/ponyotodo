@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="style.css">
         <script src="sweetalert2.min.js"></script>
         <link rel="stylesheet" href="sweetalert2.min.css">
+        <script src="https://kit.fontawesome.com/602a699ae6.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header>
@@ -32,19 +33,41 @@
         </form>
         <p class="greeting"></p>
         <div class="container">
-            <div class="toDoAdd">
-                <p>+</p>
+            <div class="navWrapper">
+            <span class="sideBtn">Side Menu</span>
+            <div class="ListNavBar">
+                <ul>
+                    <li class="active">해야할 일</li>
+                    <li>완료 목록</li>
+                    <li>삭제 목록</li>
+                    <li>즐겨찾기 목록</li>
+                    <li>중요도 목록</li>
+                </ul>
+                <input type="range" min="200" max="600" value="300" id="rangeInput">
+                <i class="fa-solid fa-gear" style="color: #fff;"></i>
             </div>
+        </div>
+            <ul class="sidemenu">
+                <h3>Side Menu</h3>
+                <li>menu1</li>
+                <li>menu2</li>
+                <li>menu3</li>
+                <li>menu4</li>
+            </ul>
             <div class="contentsWrapper">
-                <ul class="sidemenu"><h3>Side Menu</h3>
-                    <li>menu1</li>
-                    <li>menu2</li>
-                    <li>menu3</li>
-                    <li>menu4</li>
+                <div class="slideWrapper">
+                <ul id="toDoList" class="DoList active">
+                    <img src="img/left.png" alt="" id="leftBtn">
+                    <img src="img/right.png" alt="" id="rightBtn">
+                    <li>
+                        <div class="toDoAdd">
+                            <p>+</p>
+                            <p>할 일을 추가해주세요</p>
+                        </div>
+                    </li>
                 </ul>
-                <ul id="toDoList">
-                </ul>
-                <input type="range" min="200" max="600" value="300" id="rangeInput" class="active">
+                <ul id="doneList" class="DoList"></ul>
+            </div>
             </div>
         </div>
         <div class="toDoAdd-overlay"></div>
