@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'ONE-Mobile-POP';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-family: 'SUIT-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -34,7 +34,7 @@ html,body,h2,ol,ul,li,p, figure{
 }
 
 * {
-    font-family: 'ONE-Mobile-POP';
+    font-family: 'SUIT-Medium';
     box-sizing: border-box;
 }
 
@@ -73,7 +73,7 @@ header {
     padding: 0 10px;
     transition: all .3s ease-out;
     opacity: 0;
-    z-index: 2;
+    z-index: 9999;
 }
 
 header.change {
@@ -90,6 +90,7 @@ header.active {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 9999;
 }
 
 #loginForm input {
@@ -151,6 +152,7 @@ header.active {
     border-radius: 50%;
     background-color: #fff;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .logo img {
@@ -228,7 +230,6 @@ header.active {
     opacity: 0;
     transition: .3s;
     pointer-events: none;
-    position: relative;
 }
 
 .container.active {
@@ -237,32 +238,61 @@ header.active {
 }
 
 .slideWrapper {
-    width: 100vw;
-    display: flex;
-    align-items: flex-start;
+    position: absolute;
+    width: 100%;
+}
+
+.slideWrapper.animated {
     transition: .3s ease-out;
+}
+
+.DoList {
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10%;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    top: 0;
+  }
+
+#leftBtn {
+    position: absolute;
+    right: 100%;
+    width: 15px;
+    top: 50%;
+    height: 100%;
+    transform: translateY(-50%);
+    z-index: 100;
+    cursor: pointer;
+    margin-left: 20px;
+    opacity: 0.1;
+}
+
+#leftBtn.disabled, #rightBtn.disabled{
+    display: none;
+}
+
+#leftBtn.active {
+    opacity: 1;
 }
 
 #rightBtn {
     position: fixed;
     right: 0;
-    width: 100px;
+    width: 15px;
     top: 50%;
+    height: 100%;
     transform: translateY(-50%);
     z-index: 100;
     cursor: pointer;
     margin-right: 20px;
+    opacity: 0.1;
 }
 
-#leftBtn {
-    position: fixed;
-    left: 0;
-    width: 100px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-    cursor: pointer;
-    margin-left: 20px;
+#rightBtn.active {
+    opacity: 1;
 }
 
 .toDoWrapper {
@@ -333,6 +363,7 @@ header.active {
     align-items: center;
     flex: 1 1 auto;
     min-width: 200px;
+    order: -1;
 }
 
 .toDoWrapper .wrapper .front:hover {
@@ -489,6 +520,7 @@ input[id="기타"]:checked ~ label[for="기타"] {
     flex: 1 1 auto;
     width: 100%;
     position: relative;
+    order: -2;
 }
 
 #content p {
@@ -515,15 +547,11 @@ input[id="기타"]:checked ~ label[for="기타"] {
 }
 
 .contentsWrapper {
-    display: flex;
-    gap: 1rem;
-    width: 100%;
-    margin: 2rem auto;
     position: relative;
-    max-width: 1280px;
-    flex-wrap: nowrap;
-    transition: .3s ease-out;
+    width: 100%;
     overflow: hidden;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 .ListNavBar {
@@ -570,7 +598,6 @@ input[id="기타"]:checked ~ label[for="기타"] {
 }
 
 #rangeInput {
-    display: none;
     opacity: 0;
     transition: .3s ease-out;
     pointer-events: none;
@@ -578,7 +605,6 @@ input[id="기타"]:checked ~ label[for="기타"] {
 
 #rangeInput.active {
     opacity: 1;
-    display: block;
     pointer-events: all;
 }
 
@@ -591,9 +617,10 @@ input[id="기타"]:checked ~ label[for="기타"] {
     position: sticky;
     top: 55px;
     z-index: 1000;
-    background-color: #031520;
+    background-color: #656b6e;
     height: 56px;
     align-items: center;
+    border-radius: 20px;
 }
 
 .sideBtn {
@@ -635,6 +662,7 @@ input[id="기타"]:checked ~ label[for="기타"] {
     align-items: center;
     background-color: #1a1b1e;
     width: 100%;
+    height: 100%;
     max-width: 150px;
     border-radius: 10px;
     color: #6e6f78;
@@ -642,12 +670,13 @@ input[id="기타"]:checked ~ label[for="기타"] {
     cursor: pointer;
     position: fixed;
     top: 100px;
-    transform: translateX(-120%);
+    transform: translateX(-80%);
+    text-indent: -9999em;
 }
 
 .sidemenu.active {
     transform: none;
-    z-index: 9998;
+    text-indent: 0;
 }
 
 .sidemenu.active li {
@@ -682,6 +711,7 @@ input[id="기타"]:checked ~ label[for="기타"] {
     pointer-events: all;
     position: relative;
 }
+
 
 #toDoList li:not(:first-of-type) {
     display: flex;
@@ -779,44 +809,52 @@ input[id="기타"]:checked ~ label[for="기타"] {
     border: none;
     z-index: 2;
     position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 20px;
+    bottom: 5px;
+    right: 5px;
+    transform: translateX(-10%);
     color: #e4e5e7;
     font-size: 0.8rem;
     z-index: 1;
     opacity: 0;
     transition: .3s ease-out;
     cursor: pointer;
+    text-indent: -9999em;
+    background-image: url(img/Cancel.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
 }
 #toDoList li button:last-of-type {
     background: none;
     border: none;
     z-index: 2;
     position: absolute;
-    bottom: 0;
-    right: 30px;
-    padding: 20px;
+    bottom: 5px;
+    right: 5px;
+    transform: translateX(-140%);
     color: #e4e5e7;
     font-size: 0.8rem;
     z-index: 1;
     opacity: 0;
     transition: .3s ease-out;
     cursor: pointer;
+    background-image: url(img/Ok.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999em;
 }
 
 #toDoList li:hover button {
-    opacity: 1;
+    opacity: 0.5;
 }
 
 #toDoList li.animated {
 opacity: 0.7;
 }
 
-#toDoList li.animated button:hover {
-    transform: scale(2);
-    opacity: 1;
-}
 
 #toDoList li button + p {
     color: #2b2c31;
@@ -851,6 +889,7 @@ opacity: 0.7;
     flex: 1 1 auto;
     min-height: 350px;
     opacity: 0.7;
+    order: -1;
 }
 
 #toDoList li .toDoAdd {
@@ -887,7 +926,7 @@ opacity: 0.7;
     font-size: 1rem;
 }
 
-#toDoList li .toDoAdd p:hover {
+#toDoList li .toDoAdd:hover p{
     color: #ef535d;
 }
 
@@ -897,6 +936,7 @@ opacity: 0.7;
     width: 100%;
     border-radius: 10px;
     display: flex;
+    flex-direction: column-reverse;
     flex-wrap: wrap;
     padding: 1rem;
     opacity: 1;
@@ -905,99 +945,19 @@ opacity: 0.7;
     flex: 1 1 auto;
     pointer-events: all;
     position: absolute;
-    transform: translateX(100vw);
-
 }
 
 #doneList li {
     display: flex;
     justify-content: start;
     padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 20px;
+    background-color: #888;
+    border-radius: 10px;
     position: relative;
     flex-wrap: wrap;
     transition: .1s;
-    min-width: var(--minRangeValue);
-    flex: 1 1 auto;
-    min-height: 350px;
-}
-
-#doneList li:hover {
-    transform: translateY(-5px);
-}
-
-#doneList li:before {
-    content: '';
-    position: absolute;
     width: 100%;
-    height: 40%;
-    bottom: -2px;
-    left: 0;
-    background-color: #2b2c31;
-    border-radius: 0 0 20px 20px;
-}
-
-#doneList li:nth-child(2n+1){
-    background: rgb(238,174,202);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); 
-}
-#doneList li:nth-child(2n){
-    background-color: #D9AFD9;
-    background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);   
-}
-
-#doneList li:nth-child(3n){
-    background-color: #52ACFF;
-    background-image: linear-gradient(180deg, #52ACFF 25%, #FFE32C 100%);
-}
-#doneList li:nth-child(4n){
-    background-color: #74EBD5;
-    background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
-    
-}
-
-#doneList li .liTitle {
-    width: 100%;
-    font-size: 1.4rem;
-    overflow-wrap: break-word;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 50px;
-}
-
-#doneList li .liMain {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 24px;
-}
-
-#doneList li .liClosingDate{
-    margin: 15px 8px;
-    padding: 5px 12px;
-    color: #e4e5e7;
-    font-size: 0.8rem;
-    z-index: 0;
-    background-color: #2c714c;
-    align-self: flex-start;
-    border-radius: 30px;
-    min-height: 24px;
-}
-
-#doneList li  .liClassification{
-    margin: 15px 8px;
-    padding: 5px 12px;
-    color: #e4e5e7;
-    font-size: 0.8rem;
-    z-index: 0;
-    background-color: #5267c4;
-    align-self: flex-start;
-    border-radius: 30px;
-    min-height: 24px;
 }
 
 #doneList li button:first-of-type {
@@ -1020,34 +980,49 @@ opacity: 0.7;
     opacity: 1;
 }
 
-#doneList li.animated {
-opacity: 0.7;
+#doneList li span:first-of-type, #doneList li span:nth-of-type(2), #doneList li span:nth-of-type(3), #doneList li span:nth-of-type(4),#doneList li p {
+    padding: 3px;
+    position: relative;
+    border-radius: 5px;
 }
 
-#doneList li.animated button:hover {
-    transform: scale(2);
-    opacity: 1;
+#doneList li span:first-of-type {
+    background-color: #6e6f78;
+    min-width: 40px;
+    margin-right: 1rem;
 }
 
-#doneList li button + p {
-    color: #2b2c31;
-    font-size: 0.6rem;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 20px;
+#doneList li span:nth-of-type(2){
+    background-color: #888;
+    margin-right: 2rem;
+    min-width: 40px;
 }
 
-#doneList li .timeP {
-    margin: 15px 8px;
-    padding: 5px 12px;
-    color: #e4e5e7;
-    font-size: 0.8rem;
-    z-index: 0;
-    background-color: #3498db;
-    align-self: flex-start;
-    border-radius: 30px;
+#doneList li span:nth-of-type(3), #doneList li span:nth-of-type(4),#doneList li p {
+    margin-left: 0.5rem;
+    min-width: 40px;
 }
+
+#doneList li span:nth-of-type(3) {
+    background: #97D9E1;
+}
+
+#doneList li span:nth-of-type(4) {
+    background: #FAACA8;
+}
+
+#doneList li span:nth-of-type(4):before {
+    content: '생성일: ';
+}
+
+#doneList li p{
+    background: #52ACFF;
+}
+
+#doneList li p:before { 
+    content: '완료일: ';
+}
+
 
 .toDoAdd-overlay {
     opacity: 0;
@@ -1075,6 +1050,24 @@ opacity: 0.7;
     border-radius: 20px;
 }
 
+.addfunctionBtn {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#add {
+    background-color: #3b6886;
+    color: #fff;
+    bottom: 50px;
+    right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2rem;
+}
 
 
 @media screen and (max-width:720px){
@@ -1104,3 +1097,4 @@ opacity: 0.7;
         display: flex;
     }
 }
+

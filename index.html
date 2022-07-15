@@ -3,11 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>To Do</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <title>Ponyo To Do</title>
         <link rel="stylesheet" href="style.css">
-        <script src="sweetalert2.min.js"></script>
-        <link rel="stylesheet" href="sweetalert2.min.css">
         <script src="https://kit.fontawesome.com/602a699ae6.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -52,13 +50,11 @@
                 <li>menu1</li>
                 <li>menu2</li>
                 <li>menu3</li>
-                <li>menu4</li>
+                <li>할 일 초기화</li>
             </ul>
             <div class="contentsWrapper">
                 <div class="slideWrapper">
                 <ul id="toDoList" class="DoList active">
-                    <img src="img/left.png" alt="" id="leftBtn">
-                    <img src="img/right.png" alt="" id="rightBtn">
                     <li>
                         <div class="toDoAdd">
                             <p>+</p>
@@ -67,6 +63,8 @@
                     </li>
                 </ul>
                 <ul id="doneList" class="DoList"></ul>
+                    <img src="img/left.svg" alt="" id="leftBtn">
+                    <img src="img/right.svg" alt="" id="rightBtn">
             </div>
             </div>
         </div>
@@ -96,7 +94,7 @@
                         <p>내용</p>
                         <div class="back">
                                 <input type="text" placeholder="제목을 입력해주세요" id="title">
-                                <input type="text" placeholder="내용을 입력해주세요" id="contents">
+                                <input type="text" required placeholder="* 내용 입력은 필수값입니다" id="contents">
                         </div>
                         <button>✔️</button>
                     </figure>
@@ -109,8 +107,7 @@
                 </ul>
             </form>
         </div>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="sweetalert2.all.min.js"></script>
-        <script src="main.js"></script>
+        <span id="add" class="addfunctionBtn">+</span>
+        <script src="index.js"></script>
     </body>
 </html>
