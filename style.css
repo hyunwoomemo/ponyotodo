@@ -801,6 +801,9 @@ input[id="기타"]:checked ~ label[for="기타"] {
     align-items: center;
     width: 100%;
     min-height: 40%;
+    font-size: 2rem;
+    word-break: break-all;
+    text-shadow: 1px 1px 2px #fff;
 }
 
 #toDoList li .liClosingDate{
@@ -897,6 +900,7 @@ opacity: 0.7;
     background-color: #3498db;
     align-self: flex-start;
     border-radius: 30px;
+    min-width: 64px;
 }
 
 #toDoList li:first-of-type {
