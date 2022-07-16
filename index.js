@@ -374,7 +374,6 @@ function deleteToDo(event){
     addBtnUpdate();
     deleteNotification();
     calculateTallestSlide();
-    location.reload();
 }
 
 function deleteNotification(){
