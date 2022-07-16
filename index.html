@@ -11,18 +11,11 @@
     <body>
         <header>
             <ul class="menuList">
-                <div class="hambuger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
                 <div class="logo">
                     <img src="img/loading3.svg" alt="">
                 </div>
-                <li><a href="" class="active">할 일</a></li>
-                <li><a href="">가계부</a></li>
-                <li><a href="">일정</a></li>
-                <li><a href="">공부</a></li>
+                <li><a href="" class="active">TO DO</a></li>
+                <li><a href="" id="reset">초기화</a></li>
             </ul>
         </header>
         <form id="loginForm">
@@ -59,6 +52,7 @@
                         <div class="toDoAdd">
                             <p>+</p>
                             <p>할 일을 추가해주세요</p>
+                            <p>Ctrl + ↓</p>
                         </div>
                     </li>
                 </ul>
@@ -72,6 +66,18 @@
         <div class="toDoWrapper">
             <form class="toDoForm">
                 <ul class="wrapper">
+                    <figure id="content">
+                        <p>내용</p>
+                        <div class="back">
+                                <input type="text" required placeholder="* 내용 입력은 필수값입니다" id="contents">
+                        </div>
+                        <button>✔️</button>
+                    </figure>
+                    <div class="detailWrite">
+                    <span>상세 작성</span>
+                    <i class="fa-solid fa-angles-down" id="arrow"></i>
+                </div>
+                    <div class="detailWrapper">
                     <figure class="front" id="closing-date">
                         <p>마감일</p>
                         <div class="back"><input type="date"></div>
@@ -90,24 +96,20 @@
                             <label class="label" for="기타">기타</label>
                         </div>
                     </figure>
-                    <figure class="front" id="content">
-                        <p>내용</p>
-                        <div class="back">
-                                <input type="text" placeholder="제목을 입력해주세요" id="title">
-                                <input type="text" required placeholder="* 내용 입력은 필수값입니다" id="contents">
-                        </div>
-                        <button>✔️</button>
-                    </figure>
                     <figure class="front" id="important">
                         <p>중요도</p>
                     </figure>
                     <figure class="front" id="location">
                         <p>장소</p>
                     </figure>
+                </div>
                 </ul>
             </form>
         </div>
         <span id="add" class="addfunctionBtn">+</span>
+        <span class="saveNoti">할 일을 추가하였습니다.</span>
+        <span class="successNoti">완료하였습니다.</span>
+        <span class="deleteNoti"><i class="fa-solid fa-trash-can"></i><p>삭제되었습니다.</p></span>
         <script src="index.js"></script>
     </body>
 </html>

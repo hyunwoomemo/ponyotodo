@@ -51,6 +51,12 @@ const DoneList = document.querySelector('#doneList');
 
 const toDoSaveBtn = document.querySelector('#content button');
 
+const deleteNoti = document.querySelector('.deleteNoti');
+const saveNoti = document.querySelector('.saveNoti');
+const successNoti = document.querySelector('.successNoti');
+
+const detailWrite = document.querySelector('.detailWrite');
+const detailWrapper = document.querySelector('.detailWrapper');
 
 //로그인폼 제출
 loginForm.addEventListener('submit', function(event){
@@ -63,6 +69,7 @@ loginForm.addEventListener('submit', function(event){
     container.classList.add('active');
     body.classList.add('active');
     toDoBtn.style.setProperty('pointer-events','all');
+    addBtndisabled();
 })
 
 //그리팅 그리기
@@ -131,17 +138,20 @@ toDoBtn.addEventListener('click', function(){
         toDoOverlay.classList.add('active');
         toDoOverlay.style.zIndex = '9998';
         toDoWrapper.style.zIndex = '9999';
+        content.focus();
+        content.value= '';
     }
+
 
     function offToDoForm(){
         toDoOverlay.classList.remove('active');
         toDoWrapper.classList.remove('active');
         classification.value = '';
         content.value = '';
-        title.value = '';
         closingDate.value = '';
         header.style.zIndex = '2';
         toDoSaveBtn.classList.remove('active');
+        detailWrapper.classList.remove('active');
     }
 
     let toDos = [];
@@ -182,14 +192,17 @@ toDoBtn.addEventListener('click', function(){
             content: content.value,
             closing: `${closingDateInput.value}`,
             cf :checkedClassification,
-            title : title.value,
             id : Date.now(),
         };
         toDos.push(newToDoObj);
         paintToDo(newToDoObj);
         saveToDo();
         offToDoForm();
+        addBtnActive();
+        saveNotification();
+        detailWrapper.classList.remove('active');
         calculateTallestSlide();
+        autoCalcHeight();
     }
 
 //todo 리스트 만들기
@@ -206,8 +219,6 @@ function paintToDo(newToDoObj){
     toDoLi = document.createElement('li');
     const main = document.createElement('span');
     main.innerText = newToDoObj.content;
-    const titleContent = document.createElement('span');
-    titleContent.innerText = newToDoObj.title;
     const closingDate = document.createElement('span');
     closingDate.innerText = newToDoObj.closing;
     const classification = document.createElement('span');
@@ -218,7 +229,6 @@ function paintToDo(newToDoObj){
     done.innerText = "완료";
     const p = document.createElement("p");
     toDoLi.id = newToDoObj.id;
-    toDoLi.appendChild(titleContent);
     toDoLi.appendChild(main);
     toDoLi.appendChild(classification);
     toDoLi.appendChild(closingDate);
@@ -228,7 +238,6 @@ function paintToDo(newToDoObj){
     toDoLi.appendChild(p);
     toDoList.appendChild(toDoLi);
     main.classList.add('liMain')
-    titleContent.classList.add('liTitle')
     closingDate.classList.add('liClosingDate')
     classification.classList.add('liClassification')
     p.classList.add('timeP');
@@ -251,6 +260,7 @@ function paintToDo(newToDoObj){
     p.innerText = `${elapsedText}`;
     }
     elapsed();
+    setInterval(elapsed,1000);
     button.addEventListener("click", deleteToDo);
     done.addEventListener('click', handleDoneBtn);
 }
@@ -258,18 +268,15 @@ function paintToDo(newToDoObj){
 //완료버튼 기능
 
 function handleDoneBtn(event){
-    const doneTitle = event.target.parentElement.childNodes[0].textContent;
-    console.log(event.target.parentElement.childNodes[2]);
-    const doneMain = event.target.parentElement.childNodes[1].textContent;
-    const doneClassification = event.target.parentElement.childNodes[2].textContent;
-    const doneClosingDate = event.target.parentElement.childNodes[3].textContent;
-    const doneCreateDate = event.target.parentElement.childNodes[6].textContent;
+    const doneMain = event.target.parentElement.childNodes[0].textContent;
+    const doneClassification = event.target.parentElement.childNodes[1].textContent;
+    const doneClosingDate = event.target.parentElement.childNodes[2].textContent;
+    const doneCreateDate = event.target.parentElement.childNodes[5].textContent;
     console.log(event.target.parentElement.childNodes);
     DoneObj = {
         content: doneMain,
         closing: doneCreateDate,
         cf :doneClassification,
-        title : doneTitle,
         id : Date.now(),
     };
     
@@ -281,6 +288,8 @@ function handleDoneBtn(event){
     toDos = toDos.filter((toDo) => toDo.id !== parseInt(toDoLi.id));
     saveToDo();
     calculateTallestSlide();
+    addBtnUpdate();
+    successNotification();
 }
 
 function saveDone(){
@@ -306,8 +315,6 @@ function paintDone(DoneObj){
     const doneLi = document.createElement('li');
     const main = document.createElement('span');
     main.innerText = DoneObj.content;
-    const titleContent = document.createElement('span');
-    titleContent.innerText = DoneObj.title;
     const closingDate = document.createElement('span');
     closingDate.innerText = DoneObj.closing;
     const classification = document.createElement('span');
@@ -315,7 +322,6 @@ function paintDone(DoneObj){
     const button = document.createElement("button");
     button.innerText = "❌";
     doneLi.id = DoneObj.id;
-    doneLi.appendChild(titleContent);
     doneLi.appendChild(main);
     doneLi.appendChild(classification);
     doneLi.appendChild(closingDate);
@@ -355,15 +361,48 @@ if ( savedToDos !== null) {
     const parsedToDos = JSON.parse(savedToDos);
     toDos = parsedToDos; 
     parsedToDos.forEach(paintToDo);
-}
+    addBtn.classList.add('active');
+    toDoBtn.classList.remove('active');
+    addBtnUpdate();
+} 
 
 function deleteToDo(event){
-                const toDoLi = event.target.parentElement;
-                toDoLi.remove();
-                toDos = toDos.filter((toDo) => toDo.id !== parseInt(toDoLi.id));
-                saveToDo();
-            }
+    const toDoLi = event.target.parentElement;
+    toDoLi.remove();
+    toDos = toDos.filter((toDo) => toDo.id !== parseInt(toDoLi.id));
+    saveToDo();
+    addBtnUpdate();
+    deleteNotification();
+    calculateTallestSlide();
+    location.reload();
+}
 
+function deleteNotification(){
+    deleteNoti.classList.add('active');
+    setTimeout(deleteNotificationOff,2000);
+}
+
+function deleteNotificationOff(){
+    deleteNoti.classList.remove('active');
+}
+
+function saveNotification(){
+    saveNoti.classList.add('active');
+    setTimeout(saveNotificationOff,2000);
+}
+
+function saveNotificationOff(){
+    saveNoti.classList.remove('active');
+}
+
+function successNotification(){
+    successNoti.classList.add('active');
+    setTimeout(successNotificationOff,2000);
+}
+
+function successNotificationOff(){
+    successNoti.classList.remove('active');
+}
 
 rangeInput.addEventListener('input', function(){
     document.documentElement.style.setProperty('--minRangeValue', `${this.value}px`);
@@ -428,18 +467,6 @@ closingDateInput.addEventListener('click', function(){
 })
 
 
-// 분류 추가 작업 정리
-
-/* 
-    분류 추가 폼에 작성하면
-    배열의 형태로 로컬스토리지에 저장한다.
-    1. 일 2. 공부 3. 정리 4. 등등으로
-    저장된것이 있다고 하면
-    투두 작성 폼에 분류탭에 그려준다
-    그 다음에 클릭하면 효과 넣어주고
-    체크하면 창 닫기 되면서 이거를 오브젝트에 저장한다
-*/
-
 // 분류 클릭하면 저장되는 기능 추가
 
 for ( i = 0; i < classificationLabel.length; i++){
@@ -447,21 +474,6 @@ for ( i = 0; i < classificationLabel.length; i++){
         classificationForm.classList.remove('active');
     })
 }
-
-const hambuger = document.querySelector('.hambuger');
-const hambuger1 = document.querySelector('.hambuger span:first-of-type');
-const hambuger2 = document.querySelector('.hambuger span:nth-of-type(2)');
-const hambuger3 = document.querySelector('.hambuger span:last-of-type');
-
-
-
-hambuger.addEventListener('click', function(){
-    hambuger1.style.setProperty('transform','rotate(45deg)');
-    hambuger1.style.setProperty('top','50%');
-    hambuger2.style.setProperty('display','none');
-    hambuger3.style.setProperty('transform','rotate(-45deg)');
-    hambuger3.style.setProperty('top','50%');
-})
 
 //분류창 한번 더 누르면 없어지는 기능
 
@@ -472,11 +484,11 @@ classificationForm.addEventListener('click', function(){
 //스크롤시 헤더 스타일 변경
 
 window.addEventListener('scroll', function(){
-    if(this.scrollY > 10){
-        header.classList.add('change');
+    if(this.scrollY > 200){
+        header.classList.remove('active');
     } else {
-        header.classList.remove('change');
-    };
+        header.classList.add('active');
+    }
 });
 
 //사이드바
@@ -493,7 +505,7 @@ successSection.addEventListener('click', function(){
 // 컨텐츠 wrapper 의 높이 지정
 const doList = document.querySelectorAll('.DoList');
 const slideCount = doList.length;
-let topHeight = 0;
+let topHeight = 400;
 
 function calculateTallestSlide(){
 
@@ -509,7 +521,6 @@ slideWrapper.style.height = `${topHeight+50}px`;
 }
 
 calculateTallestSlide();
-console.log(topHeight);
 
 
 // range input 활성화 버튼
@@ -519,18 +530,6 @@ const settingBtn = document.querySelector('.fa-gear');
 settingBtn.addEventListener('click', function(){
     rangeInput.classList.toggle('active');
 })
-
-/* // 완료, 삭제 버튼
-
-const deleteBtn = document.querySelector('#toDoList button:first-of-type');
-
-contentsWrapper.addEventListener('mouseenter', function(){
-    contentsWrapper.classList.add('overflow');
-})
-
-contentsWrapper.addEventListener('mouseleave', function(){
-    contentsWrapper.classList.remove('overflow');
-}) */
 
 const leftBtn = document.querySelector('#leftBtn');
 const rightBtn = document.querySelector('#rightBtn');
@@ -603,6 +602,74 @@ rightBtn.addEventListener('click',function(){
 goToSlide(0);
 
 
+//add 버튼
+
 addBtn.addEventListener('click', function(){
     onToDoForm();
+})
+
+//리셋 버튼
+
+const resetBtn = document.querySelector('#reset');
+
+resetBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    localStorage.removeItem('toDos');
+    localStorage.removeItem('username');
+})
+
+// 리스트 삭제 및 완료에 따른 할일 추가 버튼 업데이트 기능
+
+function addBtnUpdate(){
+    if(toDos.length === 0) {
+        addBtndisabled();
+    } else {
+        addBtnActive();
+    }
+}
+
+function addBtndisabled(){
+addBtn.classList.remove('active');
+toDoBtn.classList.add('active');
+toDoBtnLi.classList.add('active');
+}
+
+function addBtnActive(){
+addBtn.classList.add('active');
+toDoBtn.classList.remove('active');
+toDoBtnLi.classList.remove('active');
+}
+
+addBtnUpdate();
+
+document.body.addEventListener('keydown', function(event){
+    if(event.keyCode === 40 && event.ctrlKey){
+        onToDoForm();
+    }
+    }
+)
+
+// 상세 작성 함수
+
+const arrow = document.querySelector('#arrow');
+
+detailWrite.addEventListener('click', function(){
+    detailWrapper.classList.toggle('active');
+})
+
+function autoCalcHeight(){
+if ( contentsWrapper.offsetHeight > container.offsetHeight){
+    calculateTallestSlide();
+}
+}
+
+function toDosAllDelete(){
+localStorage.removeItem('toDos');
+location.reload();
+}
+
+document.body.addEventListener('keydown', function(event){
+    if(event.keyCode === 46 && event.ctrlKey){
+        toDosAllDelete();
+    }
 })
