@@ -360,6 +360,7 @@
     "unique-filename": "^1.1.1",
     "unique-slug": "^2.0.2",
     "universalify": "^0.1.2",
+    "update-electron-app": "^2.0.1",
     "uri-js": "^4.4.1",
     "url-parse-lax": "^3.0.0",
     "username": "^5.1.0",
@@ -391,14 +392,15 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.64",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.64",
     "@electron-forge/maker-zip": "^6.0.0-beta.64",
-    "electron": "^19.0.8",
-    "electron-builder": "^23.1.0"
+    "@electron-forge/publisher-github": "^6.0.0-beta.64",
+    "electron": "^19.0.8"
   },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "deploy":"electron-builder --windows nsis:ia32"
+    "deploy": "electron-builder --windows nsis:ia32",
+    "publish": "electron-forge publish"
   },
   "build": {
     "productName": "test",
@@ -415,7 +417,7 @@
         "zip",
         "nsis"
       ],
-      "icon": "./icon.icns"
+      "icon": "./icon.png"
     },
     "nsis": {
       "oneClick": false,
@@ -426,21 +428,35 @@
       "output": "./exeResult/",
       "app": "."
     },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hyunwoomemo/ponyotodo.git"
-  },
-  "keywords": [],
-  "author": "people",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hyunwoomemo/ponyotodo/issues"
-  },
-  "homepage": "https://github.com/hyunwoomemo/ponyotodo#readme",
-  "config": {
-    "forge": {
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/hyunwoomemo/ponyotodo.git"
+    },
+    "keywords": [],
+    "author": "people",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/hyunwoomemo/ponyotodo/issues"
+    },
+    "homepage": "https://github.com/hyunwoomemo/ponyotodo#readme",
+    "config": {
+      "forge": {
+        "publisher": [
+          {
+            "name": "@electron-forge/publisher-github",
+            "config": {
+              "repository": {
+                "owner": "hyunwoomemo",
+                "name": "ponyotodo"
+              },
+              "prerelease": false,
+              "draft": true
+            }
+          }
+        ]
+      },
       "packagerConfig": {
-        "icon": "./icon"
+        "icon": "./icon.png"
       },
       "makers": [
         {
@@ -466,5 +482,4 @@
       ]
     }
   }
-}
 }

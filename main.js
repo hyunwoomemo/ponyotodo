@@ -4,46 +4,31 @@ const createWindow = () => {
     const window = new BrowserWindow({
         width: 900,
         height: 600,
-        icon: "icon.ico"
+        icon: "/icon.png"
     });
     window.loadFile("index.html");
-
-    const template = [
-        {
-            label : "Ponyo's To Do",
-            submenu : [
-                { 
-                label: "Add To Do",
-                click: () => {
-                    window.webContents.executeJavaScript(`
-                    onToDoForm();
-                    `);
-                }
-                },
-                {
-                    type : "separator",
-                },
-                { 
-                    label: "Reset",
-                    click: () => {
-                        window.webContents.executeJavaScript(`
-                        localStorage.clear();
-                        window.location.reload();
-                        `);
-                    }
-                    },
-            ]
-        },
-        {
-            label : "🐯",
-            submenu : [],
-        }
-    ];
-
-/*     const customMenu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(customMenu); */
 };
 
-app.whenReady().then(() => {
-    createWindow();
-});
+
+const NOTIFICATION_TITLE = 'Basic Notification'
+const NOTIFICATION_BODY = 'Notification from the Main process'
+
+function showNotification () {
+  new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
+}
+
+app.whenReady().then(createWindow).then(showNotification)
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow()
+  }
+})
+
+require('update-electron-app')();
