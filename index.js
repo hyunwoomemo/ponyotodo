@@ -230,8 +230,8 @@ function paintToDo(newToDoObj) {
   toDoLi.appendChild(main);
   toDoLi.appendChild(classification);
   toDoLi.appendChild(closingDate);
-  toDoLi.appendChild(done);
   toDoLi.appendChild(button);
+  toDoLi.appendChild(done);
   toDoLi.appendChild(date);
   toDoLi.appendChild(p);
   toDoList.appendChild(toDoLi);
@@ -572,9 +572,23 @@ const showList = document.querySelector('.show-list');
 showCard.addEventListener('click', () => {
   toDoList.classList.remove('listview');
   toDoList.classList.add('cardview');
+  rangeInput.classList.add('active');
 })
 
 showList.addEventListener('click', () => {
   toDoList.classList.add('listview');
   toDoList.classList.remove('cardview');
+  rangeInput.classList.remove('active');
+})
+
+content.addEventListener('keydown', (event) => {
+  if( event.keyCode === 9 ){
+    detailWrapper.classList.toggle('active');
+  }
+})
+
+content.addEventListener('keydown', (event) => {
+  if( event.keyCode === 9){
+    classificationForm.classList.add('active');
+  }
 })
