@@ -1,115 +1,137 @@
 <!DOCTYPE html>
 <html lang="en" color-theme="dark">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-        <title>Ponyo To Do</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="https://kit.fontawesome.com/602a699ae6.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <header>
-            <ul class="menuList">
-                <div class="logo">
-                    <img src="img/loading3.svg" alt="">
-                </div>
-                <li><a href="" class="active">TO DO</a></li>
-                <li><a href="" id="reset">초기화</a></li>
-            </ul>
-        </header>
-        <form id="loginForm">
-            <label for="">What is your name?</label>
-            <input type="text" placeholder="What is your name?" required maxlength="10">
-        </form>
-        <p class="greeting"></p>
-        <div class="container">
-            <div class="navWrapper">
-            <span class="sideBtn">Side Menu</span>
-            <div class="ListNavBar">
-                <ul>
-                    <li class="active">해야할 일</li>
-                    <li>완료 목록</li>
-                    <li>삭제 목록</li>
-                    <li>즐겨찾기 목록</li>
-                    <li>중요도 목록</li>
-                </ul>
-                <input type="range" min="200" max="600" value="300" id="rangeInput">
-                <i class="fa-solid fa-gear" style="color: #fff;"></i>
-            </div>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>Ponyo To Do</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/602a699ae6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header>
+    <ul class="menuList">
+      <div class="logo">
+        <img src="img/loading3.svg" alt="">
+      </div>
+      <li><a href="" class="active">TO DO</a></li>
+      <li><a href="" id="reset">초기화</a></li>
+    </ul>
+  </header>
+  <form id="loginForm">
+    <label for="">What is your name?</label>
+    <input type="text" placeholder="What is your name?" required maxlength="10">
+  </form>
+  <p class="greeting"></p>
+  <div class="container">
+    <div class="navWrapper">
+      <span class="sideBtn">Side Menu</span>
+      <div class="ListNavBar">
+        <ul>
+          <li class="active">해야할 일</li>
+          <li>완료 목록</li>
+          <li>삭제 목록</li>
+          <li>즐겨찾기 목록</li>
+          <li>중요도 목록</li>
+        </ul>
+      </div>
+    </div>
+    <ul class="sidemenu">
+      <h3>Side Menu</h3>
+      <li>menu1</li>
+      <li>menu2</li>
+      <li>menu3</li>
+      <li>할 일 초기화</li>
+    </ul>
+    <div class="contentsWrapper">
+      <div class="slideWrapper">
+        <div class="toolbar">
+          <div class="search-wrapper">
+            <input type="search" placeholder="Search for photos">
+            <div class="counter">
+              Total photos: <span>12</span></div>
+          </div>
+          <ul class="view-options">
+            <li class="zoom">
+              <input type="range" min="200" max="600" value="300" id="rangeInput" class="active">
+            </li>
+            <li class="show-grid active">
+              <button>
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/grid-view.svg" alt="grid view">
+              </button>
+            </li>
+            <li class="show-list">
+              <button>
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/list-view.svg" alt="list view">
+              </button>
+            </li>
+          </ul>
         </div>
-            <ul class="sidemenu">
-                <h3>Side Menu</h3>
-                <li>menu1</li>
-                <li>menu2</li>
-                <li>menu3</li>
-                <li>할 일 초기화</li>
-            </ul>
-            <div class="contentsWrapper">
-                <div class="slideWrapper">
-                <ul id="toDoList" class="DoList active">
-                    <li>
-                        <div class="toDoAdd">
-                            <p>+</p>
-                            <p>할 일을 추가해주세요</p>
-                            <p>Ctrl + ↓</p>
-                        </div>
-                    </li>
-                </ul>
-                <ul id="doneList" class="DoList"></ul>
-                    <img src="img/left.svg" alt="" id="leftBtn">
-                    <img src="img/right.svg" alt="" id="rightBtn">
+        <ul id="toDoList" class="DoList active cardview">
+          <li>
+            <div class="toDoAdd">
+              <p>+</p>
+              <p>할 일을 추가해주세요</p>
+              <p>Ctrl + ↓</p>
             </div>
+          </li>
+        </ul>
+        <ul id="doneList" class="DoList"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="toDoAdd-overlay"></div>
+  <div class="toDoWrapper">
+    <form class="toDoForm">
+      <ul class="wrapper">
+        <figure id="content">
+          <p>내용</p>
+          <div class="back">
+            <input type="text" required placeholder="* 내용 입력은 필수값입니다" id="contents">
+          </div>
+          <button>✔️</button>
+        </figure>
+        <div class="detailWrite">
+          <span>상세 작성</span>
+          <i class="fa-solid fa-angles-down" id="arrow"></i>
+        </div>
+        <div class="detailWrapper">
+          <figure class="front" id="closing-date">
+            <p>마감일</p>
+            <div class="back"><input type="date"></div>
+          </figure>
+          <figure class="front" id="classification">
+            <p>분류</p>
+            <span>+</span>
+            <div class="back">
+              <input type="radio" name="classification" id="공부">
+              <input type="radio" name="classification" id="집안일">
+              <input type="radio" name="classification" id="은비">
+              <input type="radio" name="classification" id="기타">
+              <label class="label" for="공부">공부</label>
+              <label class="label" for="집안일">집안일</label>
+              <label class="label" for="은비">은비</label>
+              <label class="label" for="기타">기타</label>
             </div>
+          </figure>
+          <figure class="front" id="important">
+            <p>중요도</p>
+          </figure>
+          <figure class="front" id="location">
+            <p>장소</p>
+          </figure>
         </div>
-        <div class="toDoAdd-overlay"></div>
-        <div class="toDoWrapper">
-            <form class="toDoForm">
-                <ul class="wrapper">
-                    <figure id="content">
-                        <p>내용</p>
-                        <div class="back">
-                                <input type="text" required placeholder="* 내용 입력은 필수값입니다" id="contents">
-                        </div>
-                        <button>✔️</button>
-                    </figure>
-                    <div class="detailWrite">
-                    <span>상세 작성</span>
-                    <i class="fa-solid fa-angles-down" id="arrow"></i>
-                </div>
-                    <div class="detailWrapper">
-                    <figure class="front" id="closing-date">
-                        <p>마감일</p>
-                        <div class="back"><input type="date"></div>
-                    </figure>
-                    <figure class="front" id="classification">
-                        <p>분류</p>
-                        <span>+</span>
-                        <div class="back">
-                            <input type="radio" name="classification" id="공부">
-                            <input type="radio" name="classification" id="집안일">
-                            <input type="radio" name="classification" id="은비">
-                            <input type="radio" name="classification" id="기타">
-                            <label class="label" for="공부">공부</label>
-                            <label class="label" for="집안일">집안일</label>
-                            <label class="label" for="은비">은비</label>
-                            <label class="label" for="기타">기타</label>
-                        </div>
-                    </figure>
-                    <figure class="front" id="important">
-                        <p>중요도</p>
-                    </figure>
-                    <figure class="front" id="location">
-                        <p>장소</p>
-                    </figure>
-                </div>
-                </ul>
-            </form>
-        </div>
-        <span id="add" class="addfunctionBtn">+</span>
-        <span class="saveNoti">할 일 추가 &nbsp;🚀</span>
-        <span class="successNoti">완료 &nbsp;👏</span>
-        <span class="deleteNoti">삭제 &nbsp;🗑️</span>
-        <script src="index.js"></script>
-    </body>
+      </ul>
+    </form>
+  </div>
+  <span id="add" class="addfunctionBtn">+</span>
+  <span class="saveNoti">할 일 추가 &nbsp;🚀</span>
+  <span class="successNoti">완료 &nbsp;👏</span>
+  <span class="deleteNoti">삭제 &nbsp;🗑️</span>
+  <script src="index.js"></script>
+</body>
+
 </html>

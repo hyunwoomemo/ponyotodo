@@ -214,6 +214,7 @@ header.active {
     opacity: 0;
     transition: .3s;
     pointer-events: none;
+    height: 100%;
 }
 
 .container.active {
@@ -230,6 +231,38 @@ header.active {
     transition: .3s ease-out;
 }
 
+.toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2b2c31;
+    padding: 1rem;
+    border-radius: 20px;
+}
+
+.counter {
+    margin-top: 1rem;
+}
+
+.view-options {
+    display: flex;
+    align-items: center;
+}
+
+.view-options li:not(:last-child){
+margin-right: 1.2rem;
+}
+
+.view-options button {
+padding: 2px;
+border: 3px solid transparent;
+}
+
+.view-options .active button {
+border-color: var(--darkgreen);
+}
+
 .DoList {
     position: absolute;
     width: 100%;
@@ -242,6 +275,7 @@ header.active {
   }
 
 #leftBtn {
+    display: none;
     position: fixed;
     left: 0;
     width: 15px;
@@ -263,6 +297,7 @@ header.active {
 }
 
 #rightBtn {
+    display: none;
     position: fixed;
     right: 0;
     width: 15px;
@@ -598,7 +633,6 @@ input[id="기타"]:checked ~ label[for="기타"] {
 .contentsWrapper {
     position: relative;
     width: 100%;
-    overflow: hidden;
     max-width: 1280px;
     margin: 0 auto;
 }
@@ -747,7 +781,7 @@ input[id="기타"]:checked ~ label[for="기타"] {
     pointer-events: none;
 }
 
-#toDoList.active {
+#toDoList.active.cardview {
     background-color: #1a1b1e;
     width: 100%;
     border-radius: 10px;
@@ -761,11 +795,27 @@ input[id="기타"]:checked ~ label[for="기타"] {
     pointer-events: all;
     position: relative;
     margin-top: 2rem;
+    height: 100%;
+}
+
+#toDoList.active.listview {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+    opacity: 1;
+    transition: .3s ease-out;
+    gap: 2rem;
+    flex: 1 1 auto;
+    pointer-events: all;
+    position: relative;
+    margin-top: 2rem;
+    height: 100%;
+    display: grid;
 }
 
 
 
-#toDoList li:not(:first-of-type) {
+#toDoList.cardview > li:not(:first-of-type) {
     display: flex;
     justify-content: start;
     padding: 10px;
@@ -780,11 +830,23 @@ input[id="기타"]:checked ~ label[for="기타"] {
     min-height: 350px;
 }
 
-#toDoList li:hover {
+#toDoList.listview > li:not(:first-of-type) {
+    min-height: 0;
+    display: flex;
+    background-color: #717685;
+    border-radius: 10px;
+    gap: 1rem;
+    transition: .3s ease-out;
+    padding: 0 2rem;
+    align-items: center;
+    text-align: center;
+}
+
+#toDoList.cardview > li:hover {
     transform: translateY(-5px);
 }
 
-#toDoList li:not(:first-of-type):before {
+#toDoList.cardview > li:not(:first-of-type):before {
     content: '';
     position: absolute;
     width: 100%;
@@ -795,7 +857,7 @@ input[id="기타"]:checked ~ label[for="기타"] {
     border-radius: 0 0 20px 20px;
 }
 
-#toDoList li .liMain {
+#toDoList.cardview li .liMain {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -803,10 +865,22 @@ input[id="기타"]:checked ~ label[for="기타"] {
     min-height: 40%;
     font-size: 2rem;
     word-break: break-all;
-    text-shadow: 1px 1px 2px #fff;
+    text-shadow: 1px 1px 1px gray;
 }
 
-#toDoList li .liClosingDate{
+#toDoList.listview li .liMain {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    min-height: 40%;
+    font-size: 2rem;
+    word-break: break-all;
+    text-shadow: 1px 1px 1px gray;
+    margin-left: 1rem;
+}
+
+#toDoList.cardview li .liClosingDate{
     margin: 15px 8px;
     padding: 5px 12px;
     color: #e4e5e7;
@@ -818,7 +892,7 @@ input[id="기타"]:checked ~ label[for="기타"] {
     min-height: 24px;
 }
 
-#toDoList li  .liClassification{
+#toDoList.cardview li  .liClassification{
     margin: 15px 8px;
     padding: 5px 12px;
     color: #e4e5e7;
@@ -828,9 +902,34 @@ input[id="기타"]:checked ~ label[for="기타"] {
     align-self: flex-start;
     border-radius: 30px;
     min-height: 24px;
+    white-space: nowrap;
 }
 
-#toDoList li button:first-of-type {
+#toDoList.listview li .liClosingDate{
+  margin: 15px 8px;
+  padding: 5px 12px;
+  color: #e4e5e7;
+  font-size: 0.8rem;
+  z-index: 0;
+  background-color: #2c714c;
+  border-radius: 30px;
+  min-height: 24px;
+}
+
+#toDoList.listview li  .liClassification{
+  margin: 15px 8px;
+  padding: 5px 12px;
+  color: #e4e5e7;
+  font-size: 0.8rem;
+  z-index: 0;
+  background-color: #5267c4;
+  border-radius: 30px;
+  min-height: 24px;
+  white-space: nowrap;
+  order: -1;
+}
+
+#toDoList.cardview li button:first-of-type {
     background: none;
     border: none;
     z-index: 2;
@@ -851,7 +950,7 @@ input[id="기타"]:checked ~ label[for="기타"] {
     width: 30px;
     height: 30px;
 }
-#toDoList li button:last-of-type {
+#toDoList.cardview li button:last-of-type {
     background: none;
     border: none;
     z-index: 2;
@@ -873,7 +972,16 @@ input[id="기타"]:checked ~ label[for="기타"] {
     text-indent: -9999em;
 }
 
-#toDoList li:hover button {
+#toDoList.listview li button:first-of-type {
+    white-space: nowrap;
+    align-self: center;
+}
+#toDoList.listview li button:last-of-type {
+    white-space: nowrap;
+    align-self: center;
+}
+
+#toDoList.cardview li:hover button {
     opacity: 0.5;
 }
 
@@ -882,7 +990,7 @@ opacity: 0.7;
 }
 
 
-#toDoList li button + p {
+#toDoList.cardview li button + p {
     color: #2b2c31;
     font-size: 0.6rem;
     position: absolute;
@@ -891,7 +999,13 @@ opacity: 0.7;
     padding: 20px;
 }
 
-#toDoList li .timeP {
+#toDoList.listview li button + p {
+    color: #2b2c31;
+    font-size: 0.6rem;
+    padding: 20px;
+}
+
+#toDoList.cardview li .timeP {
     margin: 15px 8px;
     padding: 5px 12px;
     color: #e4e5e7;
@@ -901,6 +1015,17 @@ opacity: 0.7;
     align-self: flex-start;
     border-radius: 30px;
     min-width: 64px;
+}
+
+#toDoList.listview li .timeP {
+  margin: 15px 8px;
+  padding: 5px 12px;
+  color: #e4e5e7;
+  font-size: 0.8rem;
+  z-index: 0;
+  background-color: #3498db;
+  border-radius: 30px;
+  min-width: 64px;
 }
 
 #toDoList li:first-of-type {
@@ -980,6 +1105,7 @@ opacity: 0.7;
     flex: 1 1 auto;
     pointer-events: all;
     position: absolute;
+    display: none;
 }
 
 #doneList li {

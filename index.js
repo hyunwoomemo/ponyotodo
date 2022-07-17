@@ -59,353 +59,348 @@ const detailWrite = document.querySelector('.detailWrite');
 const detailWrapper = document.querySelector('.detailWrapper');
 
 //로그인폼 제출
-loginForm.addEventListener('submit', function(event){
-    event.preventDefault();
-    paintGreeting();
-    saveUserName();
-    loginInput.value = '';
-    loginForm.classList.add('hidden');
-    header.classList.add('active');
-    container.classList.add('active');
-    body.classList.add('active');
-    toDoBtn.style.setProperty('pointer-events','all');
-    addBtndisabled();
+loginForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  paintGreeting();
+  saveUserName();
+  loginInput.value = '';
+  loginForm.classList.add('hidden');
+  header.classList.add('active');
+  container.classList.add('active');
+  body.classList.add('active');
+  toDoBtn.style.setProperty('pointer-events', 'all');
+  addBtndisabled();
 })
 
 //그리팅 그리기
-function paintGreeting(){
-    userName = loginInput.value;
-    greeting.innerText = `Hello, ${userName}`;
-    greeting.classList.remove('hidden');
-    header.appendChild(greeting);
+function paintGreeting() {
+  userName = loginInput.value;
+  greeting.innerText = `Hello, ${userName}`;
+  greeting.classList.remove('hidden');
+  header.appendChild(greeting);
 }
 
 //유저네임 저장
-function saveUserName(){
-    localStorage.setItem('username', userName);
+function saveUserName() {
+  localStorage.setItem('username', userName);
 }
 
 const savedUserName = localStorage.getItem('username');
 
-if( savedUserName === null) {
-    greeting.classList.add('hidden');
-    loginForm.classList.remove('hidden');
-    toDoBtn.style.setProperty('pointer-events','none');
+if (savedUserName === null) {
+  greeting.classList.add('hidden');
+  loginForm.classList.remove('hidden');
+  toDoBtn.style.setProperty('pointer-events', 'none');
 
 } else {
-    greeting.classList.remove('hidden');
-    loginForm.classList.add('hidden');
-    greeting.innerText = `Hello, ${savedUserName}`;
-    header.appendChild(greeting);
-    header.classList.add('active');
-    container.classList.add('active');
-    body.classList.add('active');
-    toDoBtn.style.setProperty('pointer-events','all');
+  greeting.classList.remove('hidden');
+  loginForm.classList.add('hidden');
+  greeting.innerText = `Hello, ${savedUserName}`;
+  header.appendChild(greeting);
+  header.classList.add('active');
+  container.classList.add('active');
+  body.classList.add('active');
+  toDoBtn.style.setProperty('pointer-events', 'all');
 }
 
 // 헤더 메뉴 클릭
 
 const headerMenu = document.querySelectorAll('.menuList li a');
 
-for ( i = 0; i < headerMenu.length; i++){
-headerMenu[i].addEventListener('click', function(event){
+for (i = 0; i < headerMenu.length; i++) {
+  headerMenu[i].addEventListener('click', function (event) {
     event.preventDefault();
-    for( j = 0; j < headerMenu.length; j++) {
-    headerMenu[j].classList.remove('active');
-    event.target.classList.add('active');
-}
-})
+    for (j = 0; j < headerMenu.length; j++) {
+      headerMenu[j].classList.remove('active');
+      event.target.classList.add('active');
+    }
+  })
 }
 
 // 투두 아이템 추가 
 
 
-toDoBtn.addEventListener('click', function(){
-    //오버레이 활성화,투두폼 활성화
-    onToDoForm();
-    radioUnchecked();
-    clearClassificationText();
-    clearCheckedDate();
+toDoBtn.addEventListener('click', function () {
+  //오버레이 활성화,투두폼 활성화
+  onToDoForm();
+  radioUnchecked();
+  clearClassificationText();
+  clearCheckedDate();
 })
-    //오버레이 비활성화,투두폼 비활성화
-    toDoOverlay.addEventListener('click', function(){
-        offToDoForm();
-        sideBar.classList.remove('active');
-    })
+//오버레이 비활성화,투두폼 비활성화
+toDoOverlay.addEventListener('click', function () {
+  offToDoForm();
+  sideBar.classList.remove('active');
+})
 
-    function onToDoForm(){
-        toDoWrapper.classList.add('active');
-        toDoOverlay.classList.add('active');
-        toDoOverlay.style.zIndex = '9998';
-        toDoWrapper.style.zIndex = '9999';
-        content.focus();
-        content.value= '';
-    }
+function onToDoForm() {
+  toDoWrapper.classList.add('active');
+  toDoOverlay.classList.add('active');
+  toDoOverlay.style.zIndex = '9998';
+  toDoWrapper.style.zIndex = '9999';
+  content.focus();
+  content.value = '';
+}
 
 
-    function offToDoForm(){
-        toDoOverlay.classList.remove('active');
-        toDoWrapper.classList.remove('active');
-        classification.value = '';
-        content.value = '';
-        closingDate.value = '';
-        header.style.zIndex = '2';
-        toDoSaveBtn.classList.remove('active');
-        detailWrapper.classList.remove('active');
-    }
+function offToDoForm() {
+  toDoOverlay.classList.remove('active');
+  toDoWrapper.classList.remove('active');
+  classification.value = '';
+  content.value = '';
+  closingDate.value = '';
+  header.style.zIndex = '2';
+  toDoSaveBtn.classList.remove('active');
+  detailWrapper.classList.remove('active');
+}
 
-    let toDos = [];
-    let checkedClassification = [];
+let toDos = [];
+let checkedClassification = [];
 
 //todo 작성 저장
 
-    for ( var i = 0; i < classification.length; i++){
-        classification[i].addEventListener('click', function(){
-            clearClassificationText();
-            checkedClassification = this.id;
-            classificationText = document.createElement('span');
-            classfi.appendChild(classificationText);
-            classificationText.className ='cft';
-            classificationText.innerText =  checkedClassification;
-        })
-    }
-    //분류 초기화
-    function clearClassificationText(){
-        classificationText.textContent = '';
-    }
+for (var i = 0; i < classification.length; i++) {
+  classification[i].addEventListener('click', function () {
+    clearClassificationText();
+    checkedClassification = this.id;
+    classificationText = document.createElement('span');
+    classfi.appendChild(classificationText);
+    classificationText.className = 'cft';
+    classificationText.innerText = checkedClassification;
+  })
+}
+//분류 초기화
+function clearClassificationText() {
+  classificationText.textContent = '';
+}
 
-    function radioUnchecked(){
-        for ( i = 0; i < classification.length; i++){
-            classification[i].checked = false;
-        }
-    }
+function radioUnchecked() {
+  for (i = 0; i < classification.length; i++) {
+    classification[i].checked = false;
+  }
+}
 
-    //제출하면 할 일
+//제출하면 할 일
 
 
-    toDoForm.addEventListener('submit', handleToDoSubmit);
+toDoForm.addEventListener('submit', handleToDoSubmit);
 
-    function handleToDoSubmit(event){
-        event.preventDefault();
-        toDoList.classList.add('active');
-        newToDoObj = {
-            content: content.value,
-            closing: `${closingDateInput.value}`,
-            cf :checkedClassification,
-            id : Date.now(),
-        };
-        toDos.push(newToDoObj);
-        paintToDo(newToDoObj);
-        saveToDo();
-        offToDoForm();
-        addBtnActive();
-        saveNotification();
-        detailWrapper.classList.remove('active');
-        calculateTallestSlide();
-        autoCalcHeight();
-    }
+function handleToDoSubmit(event) {
+  event.preventDefault();
+  toDoList.classList.add('active');
+  newToDoObj = {
+    content: content.value,
+    closing: `${closingDateInput.value}`,
+    cf: checkedClassification,
+    id: Date.now(),
+  };
+  toDos.push(newToDoObj);
+  paintToDo(newToDoObj);
+  saveToDo();
+  offToDoForm();
+  addBtnActive();
+  saveNotification();
+  detailWrapper.classList.remove('active');
+}
 
 //todo 리스트 만들기
 
 
-function paintToDo(newToDoObj){
-    const date = document.createElement("p");
-    const dateText = new Date(newToDoObj.id);
-    const dateMonth = String(dateText.getMonth()+1).padStart(2,"0");
-    const dateDate = String(dateText.getDate()).padStart(2,"0");
-    const dateHours = String(dateText.getHours()).padStart(2,"0");
-    const dateMinutes = String(dateText.getMinutes()).padStart(2,"0");
-    date.innerText = `${dateMonth}월 ${dateDate}일 ${dateHours}:${dateMinutes}`;
-    toDoLi = document.createElement('li');
-    const main = document.createElement('span');
-    main.innerText = newToDoObj.content;
-    const closingDate = document.createElement('span');
-    closingDate.innerText = newToDoObj.closing;
-    const classification = document.createElement('span');
-    classification.innerText = newToDoObj.cf;
-    const button = document.createElement("button");
-    button.innerText = "삭제";
-    const done = document.createElement("button");
-    done.innerText = "완료";
-    const p = document.createElement("p");
-    toDoLi.id = newToDoObj.id;
-    toDoLi.appendChild(main);
-    toDoLi.appendChild(classification);
-    toDoLi.appendChild(closingDate);
-    toDoLi.appendChild(button);
-    toDoLi.appendChild(done);
-    toDoLi.appendChild(date);
-    toDoLi.appendChild(p);
-    toDoList.appendChild(toDoLi);
-    main.classList.add('liMain')
-    closingDate.classList.add('liClosingDate')
-    classification.classList.add('liClassification')
-    p.classList.add('timeP');
-    p.innerText = elapsed();
-    function elapsed(){
-        const today = new Date();
-        const elapsedTime = Math.trunc((today.getTime()-toDoLi.id) / 1000);
-        let elapsedText ="";
-        if (elapsedTime < seconds) {
-            elapsedText = "방금 전";
-        } else if (elapsedTime < minute) {
-            elapsedText = elapsedTime + "초 전";
-        } else if (elapsedTime < hour) {
-            elapsedText = Math.trunc(elapsedTime / minute) + "분 전";
-        } else if (elapsedTime < day) {
-            elapsedText = Math.trunc(elapsedTime / hour) + "시간 전";
-        } else if (elapsedTime < (day * 15)) {
-            elapsedText = Math.trunc(elapsedTime / day) + "일 전";
-        };
+function paintToDo(newToDoObj) {
+  const date = document.createElement("p");
+  const dateText = new Date(newToDoObj.id);
+  const dateMonth = String(dateText.getMonth() + 1).padStart(2, "0");
+  const dateDate = String(dateText.getDate()).padStart(2, "0");
+  const dateHours = String(dateText.getHours()).padStart(2, "0");
+  const dateMinutes = String(dateText.getMinutes()).padStart(2, "0");
+  date.innerText = `${dateMonth}월 ${dateDate}일 ${dateHours}:${dateMinutes}`;
+  toDoLi = document.createElement('li');
+  const main = document.createElement('span');
+  main.innerText = newToDoObj.content;
+  const closingDate = document.createElement('span');
+  closingDate.innerText = newToDoObj.closing;
+  const classification = document.createElement('span');
+  classification.innerText = newToDoObj.cf;
+  const button = document.createElement("button");
+  button.innerText = "삭제";
+  const done = document.createElement("button");
+  done.innerText = "완료";
+  const p = document.createElement("p");
+  toDoLi.id = newToDoObj.id;
+  toDoLi.appendChild(main);
+  toDoLi.appendChild(classification);
+  toDoLi.appendChild(closingDate);
+  toDoLi.appendChild(done);
+  toDoLi.appendChild(button);
+  toDoLi.appendChild(date);
+  toDoLi.appendChild(p);
+  toDoList.appendChild(toDoLi);
+  main.classList.add('liMain')
+  closingDate.classList.add('liClosingDate')
+  classification.classList.add('liClassification')
+  p.classList.add('timeP');
+  p.innerText = elapsed();
+  function elapsed() {
+    const today = new Date();
+    const elapsedTime = Math.trunc((today.getTime() - toDoLi.id) / 1000);
+    let elapsedText = "";
+    if (elapsedTime < seconds) {
+      elapsedText = "방금 전";
+    } else if (elapsedTime < minute) {
+      elapsedText = elapsedTime + "초 전";
+    } else if (elapsedTime < hour) {
+      elapsedText = Math.trunc(elapsedTime / minute) + "분 전";
+    } else if (elapsedTime < day) {
+      elapsedText = Math.trunc(elapsedTime / hour) + "시간 전";
+    } else if (elapsedTime < (day * 15)) {
+      elapsedText = Math.trunc(elapsedTime / day) + "일 전";
+    };
     p.innerText = `${elapsedText}`;
-    }
-    elapsed();
-    setInterval(elapsed,1000);
-    button.addEventListener("click", deleteToDo);
-    done.addEventListener('click', handleDoneBtn);
+  }
+  elapsed();
+  /*     setInterval(elapsed,1000); */
+  button.addEventListener("click", deleteToDo);
+  done.addEventListener('click', handleDoneBtn);
 }
 
 //완료버튼 기능
 
-function handleDoneBtn(event){
-    const doneMain = event.target.parentElement.childNodes[0].textContent;
-    const doneClassification = event.target.parentElement.childNodes[1].textContent;
-    const doneClosingDate = event.target.parentElement.childNodes[2].textContent;
-    const doneCreateDate = event.target.parentElement.childNodes[5].textContent;
-    console.log(event.target.parentElement.childNodes);
-    DoneObj = {
-        content: doneMain,
-        closing: doneCreateDate,
-        cf :doneClassification,
-        id : Date.now(),
-    };
-    
-    dones.push(DoneObj);
-    saveDone();
-    paintDone(DoneObj);
-    const toDoLi = event.target.parentElement;
-    toDoLi.remove();
-    toDos = toDos.filter((toDo) => toDo.id !== parseInt(toDoLi.id));
-    saveToDo();
-    calculateTallestSlide();
-    addBtnUpdate();
-    successNotification();
+function handleDoneBtn(event) {
+  const doneMain = event.target.parentElement.childNodes[0].textContent;
+  const doneClassification = event.target.parentElement.childNodes[1].textContent;
+  const doneClosingDate = event.target.parentElement.childNodes[2].textContent;
+  const doneCreateDate = event.target.parentElement.childNodes[5].textContent;
+  console.log(event.target.parentElement.childNodes);
+  DoneObj = {
+    content: doneMain,
+    closing: doneCreateDate,
+    cf: doneClassification,
+    id: Date.now(),
+  };
+
+  dones.push(DoneObj);
+  saveDone();
+  paintDone(DoneObj);
+  const toDoLi = event.target.parentElement;
+  toDoLi.remove();
+  toDos = toDos.filter((toDo) => toDo.id !== parseInt(toDoLi.id));
+  saveToDo();
+  addBtnUpdate();
+  successNotification();
 }
 
-function saveDone(){
-    localStorage.setItem('dones', JSON.stringify(dones));
+function saveDone() {
+  localStorage.setItem('dones', JSON.stringify(dones));
 }
 
 const savedDone = localStorage.getItem('dones');
 
-if(savedDone !== null) {
-    const parsedDone = JSON.parse(savedDone);
-    dones = parsedDone;
-    parsedDone.forEach(paintDone);
+if (savedDone !== null) {
+  const parsedDone = JSON.parse(savedDone);
+  dones = parsedDone;
+  parsedDone.forEach(paintDone);
 }
 
-function paintDone(DoneObj){
-    const date = document.createElement("p");
-    const dateText = new Date(DoneObj.id);
-    const dateMonth = String(dateText.getMonth()+1).padStart(2,"0");
-    const dateDate = String(dateText.getDate()).padStart(2,"0");
-    const dateHours = String(dateText.getHours()).padStart(2,"0");
-    const dateMinutes = String(dateText.getMinutes()).padStart(2,"0");
-    date.innerText = `${dateMonth}월 ${dateDate}일 ${dateHours}:${dateMinutes}`;
-    const doneLi = document.createElement('li');
-    const main = document.createElement('span');
-    main.innerText = DoneObj.content;
-    const closingDate = document.createElement('span');
-    closingDate.innerText = DoneObj.closing;
-    const classification = document.createElement('span');
-    classification.innerText = DoneObj.cf;
-    const button = document.createElement("button");
-    button.innerText = "❌";
-    doneLi.id = DoneObj.id;
-    doneLi.appendChild(main);
-    doneLi.appendChild(classification);
-    doneLi.appendChild(closingDate);
-    doneLi.appendChild(date);
-    doneLi.appendChild(button);
-    DoneList.appendChild(doneLi);
-    button.addEventListener('click', deleteDone);
+function paintDone(DoneObj) {
+  const date = document.createElement("p");
+  const dateText = new Date(DoneObj.id);
+  const dateMonth = String(dateText.getMonth() + 1).padStart(2, "0");
+  const dateDate = String(dateText.getDate()).padStart(2, "0");
+  const dateHours = String(dateText.getHours()).padStart(2, "0");
+  const dateMinutes = String(dateText.getMinutes()).padStart(2, "0");
+  date.innerText = `${dateMonth}월 ${dateDate}일 ${dateHours}:${dateMinutes}`;
+  const doneLi = document.createElement('li');
+  const main = document.createElement('span');
+  main.innerText = DoneObj.content;
+  const closingDate = document.createElement('span');
+  closingDate.innerText = DoneObj.closing;
+  const classification = document.createElement('span');
+  classification.innerText = DoneObj.cf;
+  const button = document.createElement("button");
+  button.innerText = "❌";
+  doneLi.id = DoneObj.id;
+  doneLi.appendChild(main);
+  doneLi.appendChild(classification);
+  doneLi.appendChild(closingDate);
+  doneLi.appendChild(date);
+  doneLi.appendChild(button);
+  DoneList.appendChild(doneLi);
+  button.addEventListener('click', deleteDone);
 }
 
-function deleteDone(event){
-    const li = event.target.parentElement;
-    li.remove();
-    dones = dones.filter((done) => done.id !== parseInt(li.id));
-    saveDone();
-}
-
-
-function handleDeleteBtnEnter(event){
-    const li = event.target.parentElement;
-    li.classList.add('animated');
-}
-function handleDeleteBtnLeave(event){
-    const li = event.target.parentElement;
-    li.classList.remove('animated');
+function deleteDone(event) {
+  const li = event.target.parentElement;
+  li.remove();
+  dones = dones.filter((done) => done.id !== parseInt(li.id));
+  saveDone();
 }
 
 
+function handleDeleteBtnEnter(event) {
+  const li = event.target.parentElement;
+  li.classList.add('animated');
+}
+function handleDeleteBtnLeave(event) {
+  const li = event.target.parentElement;
+  li.classList.remove('animated');
+}
 
-function saveToDo(){
-    localStorage.setItem("toDos",JSON.stringify(toDos));
+
+
+function saveToDo() {
+  localStorage.setItem("toDos", JSON.stringify(toDos));
 }
 
 let savedToDos = localStorage.getItem('toDos');
 
 
-if ( savedToDos !== null) {
-    const parsedToDos = JSON.parse(savedToDos);
-    toDos = parsedToDos; 
-    parsedToDos.forEach(paintToDo);
-    addBtn.classList.add('active');
-    toDoBtn.classList.remove('active');
-    addBtnUpdate();
-} 
-
-function deleteToDo(event){
-    const toDoLi = event.target.parentElement;
-    toDoLi.remove();
-    toDos = toDos.filter((toDo) => toDo.id !== parseInt(toDoLi.id));
-    saveToDo();
-    addBtnUpdate();
-    deleteNotification();
-    calculateTallestSlide();
+if (savedToDos !== null) {
+  const parsedToDos = JSON.parse(savedToDos);
+  toDos = parsedToDos;
+  parsedToDos.forEach(paintToDo);
+  addBtn.classList.add('active');
+  toDoBtn.classList.remove('active');
+  addBtnUpdate();
 }
 
-function deleteNotification(){
-    deleteNoti.classList.add('active');
-    setTimeout(deleteNotificationOff,2000);
+function deleteToDo(event) {
+  const toDoLi = event.target.parentElement;
+  toDoLi.remove();
+  toDos = toDos.filter((toDo) => toDo.id !== parseInt(toDoLi.id));
+  saveToDo();
+  addBtnUpdate();
+  deleteNotification();
 }
 
-function deleteNotificationOff(){
-    deleteNoti.classList.remove('active');
+function deleteNotification() {
+  deleteNoti.classList.add('active');
+  setTimeout(deleteNotificationOff, 2000);
 }
 
-function saveNotification(){
-    saveNoti.classList.add('active');
-    setTimeout(saveNotificationOff,2000);
+function deleteNotificationOff() {
+  deleteNoti.classList.remove('active');
 }
 
-function saveNotificationOff(){
-    saveNoti.classList.remove('active');
+function saveNotification() {
+  saveNoti.classList.add('active');
+  setTimeout(saveNotificationOff, 2000);
 }
 
-function successNotification(){
-    successNoti.classList.add('active');
-    setTimeout(successNotificationOff,2000);
+function saveNotificationOff() {
+  saveNoti.classList.remove('active');
 }
 
-function successNotificationOff(){
-    successNoti.classList.remove('active');
+function successNotification() {
+  successNoti.classList.add('active');
+  setTimeout(successNotificationOff, 2000);
 }
 
-rangeInput.addEventListener('input', function(){
-    document.documentElement.style.setProperty('--minRangeValue', `${this.value}px`);
-    calculateTallestSlide();
+function successNotificationOff() {
+  successNoti.classList.remove('active');
+}
+
+rangeInput.addEventListener('input', function () {
+  document.documentElement.style.setProperty('--minRangeValue', `${this.value}px`);
 })
 
 
@@ -414,197 +409,85 @@ const sideBtn = document.querySelector('.sideBtn');
 const sideBar = document.querySelector('.sidemenu');
 const sideMenu4 = document.querySelector('.sidemenu li:nth-of-type(4)');
 
-function displaySideBar(){
-    sideBar.classList.toggle('active');
-    toDoOverlay.classList.toggle('active');
-    toDoWrapper.style.zIndex = '9997';
-    sideBar.style.zIndex = '9998';
+function displaySideBar() {
+  sideBar.classList.toggle('active');
+  toDoOverlay.classList.toggle('active');
+  toDoWrapper.style.zIndex = '9997';
+  sideBar.style.zIndex = '9998';
 };
 
-
-sideBtn.addEventListener('click', function(){
-    displaySideBar();
+sideBtn.addEventListener('click', function () {
+  displaySideBar();
 })
 
-sideBar.addEventListener('click', function(){
-    displaySideBar();
+sideBar.addEventListener('click', function () {
+  displaySideBar();
 })
 
 // 분류 저장
 
-classificationAdd.addEventListener('click', function(){
-    toDoOverlay.classList.add('active');
-    toDoOverlay.style.zIndex = '9998';
-    classificationForm.classList.add('active');
-    clearClassificationText();
-    radioUnchecked();
+classificationAdd.addEventListener('click', function () {
+  toDoOverlay.classList.add('active');
+  toDoOverlay.style.zIndex = '9998';
+  classificationForm.classList.add('active');
+  clearClassificationText();
+  radioUnchecked();
 })
 
 // to do 저장 버튼 활성화 
 
-content.addEventListener('input', function(){
-    toDoSaveBtn.classList.add('active');
+content.addEventListener('input', function () {
+  toDoSaveBtn.classList.add('active');
 })
 
 // date 아웃풋
 
 
-closingDateInput.addEventListener('input', function(){
-    checkdDate = document.createElement('span');
-    closingDate.appendChild(checkdDate);
-    checkdDate.innerText = `${this.value} 까지`;
-    checkdDate.classList.add('cft');
+closingDateInput.addEventListener('input', function () {
+  checkdDate = document.createElement('span');
+  closingDate.appendChild(checkdDate);
+  checkdDate.innerText = `${this.value} 까지`;
+  checkdDate.classList.add('cft');
 })
 
-function clearCheckedDate(){
-    checkdDate.innerText = '';
-    closingDateInput.value = '';
+function clearCheckedDate() {
+  checkdDate.innerText = '';
+  closingDateInput.value = '';
 }
 
-closingDateInput.addEventListener('click', function(){
-    clearCheckedDate();
+closingDateInput.addEventListener('click', function () {
+  clearCheckedDate();
 })
 
 
 // 분류 클릭하면 저장되는 기능 추가
 
-for ( i = 0; i < classificationLabel.length; i++){
-    classificationLabel[i].addEventListener('click', function(){
-        classificationForm.classList.remove('active');
-    })
+for (i = 0; i < classificationLabel.length; i++) {
+  classificationLabel[i].addEventListener('click', function () {
+    classificationForm.classList.remove('active');
+  })
 }
 
 //분류창 한번 더 누르면 없어지는 기능
 
-classificationForm.addEventListener('click', function(){
-    classificationForm.classList.remove('active');
+classificationForm.addEventListener('click', function () {
+  classificationForm.classList.remove('active');
 })
 
 //스크롤시 헤더 스타일 변경
 
-window.addEventListener('scroll', function(){
-    if(this.scrollY > 200){
-        header.classList.remove('active');
-    } else {
-        header.classList.add('active');
-    }
+window.addEventListener('scroll', function () {
+  if (this.scrollY > 200) {
+    header.classList.remove('active');
+  } else {
+    header.classList.add('active');
+  }
 });
-
-//사이드바
-
-
-
-// 리스트 nav bar 
-
-
-successSection.addEventListener('click', function(){
-    docElem.scrollTop = 0;
-})
-
-// 컨텐츠 wrapper 의 높이 지정
-const doList = document.querySelectorAll('.DoList');
-const slideCount = doList.length;
-let topHeight = 400;
-
-function calculateTallestSlide(){
-
-for ( i = 0; i < slideCount; i++){
-    if(doList[i].offsetHeight > topHeight){
-        topHeight = doList[i].offsetHeight;
-    }
-}
-
-container.style.height = `${topHeight+50}px`;
-contentsWrapper.style.height = `${topHeight+50}px`;
-slideWrapper.style.height = `${topHeight+50}px`;
-}
-
-calculateTallestSlide();
-
-
-// range input 활성화 버튼
-
-const settingBtn = document.querySelector('.fa-gear');
-
-settingBtn.addEventListener('click', function(){
-    rangeInput.classList.toggle('active');
-})
-
-const leftBtn = document.querySelector('#leftBtn');
-const rightBtn = document.querySelector('#rightBtn');
-
-rightBtn.addEventListener('click', function(){
-    docElem.scrollTop = 0;
-})
-
-rightBtn.addEventListener('click', function(){
-    docElem.scrollTop = 0;
-})
-leftBtn.addEventListener('click', function(){
-    docElem.scrollTop = 0;
-})
-
-let currentIndex = 0;
-
-const moveSlideWidth = slideWrapper.offsetWidth;
-
-// 슬라이드가 있으면 가로로 배열하기
-
-for ( i = 0; i < slideCount; i++){
-    doList[i].style.left = `${i*100}%`
-}
-
-// 슬라이드 이동 함수
-
-function goToSlide(idx){
-    slideWrapper.classList.add('animated');
-    slideWrapper.style.left = `${idx*-100}%`;
-    currentIndex = idx;
-}
-
-// 버튼 기능 업데이트 함수
-
-function updateNav(){
-    //처음일 때
-    if(currentIndex === 0){
-        leftBtn.classList.add('disabled');
-    } else {
-        leftBtn.classList.remove('disabled');
-    }
-
-    //마지막일 때
-    if(currentIndex === slideCount-1){
-        rightBtn.classList.add('disabled');
-    } else {
-        rightBtn.classList.remove('disabled');
-    }
-}
-
-//버튼을 클릭하면 슬라이드 이동시키기
-
-leftBtn.addEventListener('click',function(){
-    if( currentIndex === 0){
-        goToSlide(slideCount-1);
-    } else {
-        goToSlide(currentIndex - 1);
-    }
-})
-
-rightBtn.addEventListener('click',function(){
-    if( currentIndex === slideCount-1){
-        goToSlide(0);
-    } else {
-        goToSlide(currentIndex + 1);
-    }
-})
-
-goToSlide(0);
-
 
 //add 버튼
 
-addBtn.addEventListener('click', function(){
-    onToDoForm();
+addBtn.addEventListener('click', function () {
+  onToDoForm();
 })
 
 //리셋 버튼
@@ -612,63 +495,86 @@ addBtn.addEventListener('click', function(){
 const resetBtn = document.querySelector('#reset');
 
 resetBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    localStorage.removeItem('toDos');
-    localStorage.removeItem('username');
+  event.preventDefault();
+  localStorage.removeItem('toDos');
+  localStorage.removeItem('username');
 })
 
 // 리스트 삭제 및 완료에 따른 할일 추가 버튼 업데이트 기능
 
-function addBtnUpdate(){
-    if(toDos.length === 0) {
-        addBtndisabled();
-    } else {
-        addBtnActive();
-    }
+function addBtnUpdate() {
+  if (toDos.length === 0) {
+    addBtndisabled();
+  } else {
+    addBtnActive();
+  }
 }
 
-function addBtndisabled(){
-addBtn.classList.remove('active');
-toDoBtn.classList.add('active');
-toDoBtnLi.classList.add('active');
+function addBtndisabled() {
+  addBtn.classList.remove('active');
+  toDoBtn.classList.add('active');
+  toDoBtnLi.classList.add('active');
 }
 
-function addBtnActive(){
-addBtn.classList.add('active');
-toDoBtn.classList.remove('active');
-toDoBtnLi.classList.remove('active');
+function addBtnActive() {
+  addBtn.classList.add('active');
+  toDoBtn.classList.remove('active');
+  toDoBtnLi.classList.remove('active');
 }
 
 addBtnUpdate();
 
-document.body.addEventListener('keydown', function(event){
-    if(event.keyCode === 40 && event.ctrlKey){
-        onToDoForm();
-    }
-    }
+document.body.addEventListener('keydown', function (event) {
+  if (event.keyCode === 40 && event.ctrlKey) {
+    onToDoForm();
+  }
+}
 )
 
 // 상세 작성 함수
 
 const arrow = document.querySelector('#arrow');
 
-detailWrite.addEventListener('click', function(){
-    detailWrapper.classList.toggle('active');
+detailWrite.addEventListener('click', function () {
+  detailWrapper.classList.toggle('active');
 })
 
-function autoCalcHeight(){
-if ( contentsWrapper.offsetHeight > container.offsetHeight){
-    calculateTallestSlide();
-}
-}
-
-function toDosAllDelete(){
-localStorage.removeItem('toDos');
-location.reload();
+function toDosAllDelete() {
+  localStorage.removeItem('toDos');
+  location.reload();
 }
 
-document.body.addEventListener('keydown', function(event){
-    if(event.keyCode === 46 && event.ctrlKey){
-        toDosAllDelete();
-    }
+document.body.addEventListener('keydown', function (event) {
+  if (event.keyCode === 46 && event.ctrlKey) {
+    toDosAllDelete();
+  }
+})
+
+// 검색
+
+const captions = document.querySelectorAll('.liMain');
+
+const myArray = [];
+let counter = 1;
+
+for (const caption of captions) {
+  myArray.push({
+    id: counter++,
+    text: caption.textContent,
+  });
+}
+
+// 뷰 스타일 변경
+
+const showCard = document.querySelector('.show-grid');
+const showList = document.querySelector('.show-list');
+
+showCard.addEventListener('click', () => {
+  toDoList.classList.remove('listview');
+  toDoList.classList.add('cardview');
+})
+
+showList.addEventListener('click', () => {
+  toDoList.classList.add('listview');
+  toDoList.classList.remove('cardview');
 })
